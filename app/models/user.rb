@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  attr_accessor :remember_token
+   attr_accessor :remember_token
   before_save { self.email = email.downcase }
 
   validates :name,  presence: true, length: { maximum: 50 }
@@ -7,11 +7,12 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 100 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: true  
-  validates :class, length: { in: 2..30 }, allow_blank: true                  
+  validates :classroom, length: { in: 2..30 }, allow_blank: true                  
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
-  
-   # 渡された文字列のハッシュ値を返します。
+  validates :basic_time, presence: true
+  validates :work_time, presence: true
+  #渡された文字列のハッシュ値を返します。
   def User.digest(string)
     cost = 
       if ActiveModel::SecurePassword.min_cost
@@ -32,8 +33,8 @@ class User < ApplicationRecord
     self.remember_token = User.new_token
     update_attribute(:remember_digest, User.digest(remember_token))
   end
-  
-  # トークンがダイジェストと一致すればtrueを返します。
+
+# トークンがダイジェストと一致すればtrueを返します。
   def authenticated?(remember_token)
     # ダイジェストが存在しない場合はfalseを返して終了します。
     return false if remember_digest.nil?

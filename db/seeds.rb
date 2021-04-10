@@ -10,3 +10,5 @@ User.create!(name: "管理職",
              email: "kanri@email.com",
              password: "password",
              password_confirmation: "password")
+
+
