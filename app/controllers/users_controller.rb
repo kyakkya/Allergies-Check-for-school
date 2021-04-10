@@ -3,14 +3,14 @@ class UsersController < ApplicationController
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info]
+  before_action :set_one_month, only: :show
 
   def index
     @users = User.paginate(page: params[:page])
   end
 
   def show
-    @first_day = Date.current.beginning_of_month
-    @last_day = @first_day.end_of_month
+    @worked_sum = @attendances.where.not(started_at: nil).count
   end
 
   def new
@@ -45,13 +45,13 @@ class UsersController < ApplicationController
     flash[:success] = "#{@user.name}のデータを削除しました。"
     redirect_to users_url
   end
-  
+
   def edit_basic_info
   end
 
   def update_basic_info
     if @user.update_attributes(basic_info_params)
-       flash[:success] = "#{@user.name}の基本情報を更新しました。"
+      flash[:success] = "#{@user.name}の基本情報を更新しました。"
     else
       flash[:danger] = "#{@user.name}の更新は失敗しました。<br>" + @user.errors.full_messages.join("<br>")
     end
@@ -61,17 +61,18 @@ class UsersController < ApplicationController
   private
 
     def user_params
-      params.require(:user).permit(:name, :email, :password, :classroom, :password_confirmation)
+      params.require(:user).permit(:name, :email, :department, :password, :password_confirmation)
     end
-    
+
     def basic_info_params
-      params.require(:user).permit(:classroom, :basic_time, :work_time)
+      params.require(:user).permit(:department, :basic_time, :work_time)
     end
+
     # beforeフィルター
 
     # paramsハッシュからユーザーを取得します。
     def set_user
-      @user = User.find(params[:id])
+        @user = User.find(params[:id])
     end
 
     # ログイン済みのユーザーか確認します。
@@ -87,9 +88,9 @@ class UsersController < ApplicationController
     def correct_user
       redirect_to(root_url) unless current_user?(@user)
     end
-   
+
     # システム管理権限所有かどうか判定します。
     def admin_user
       redirect_to root_url unless current_user.admin?
-    end 
-end
+    end
+end  
