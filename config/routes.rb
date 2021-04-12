@@ -12,6 +12,11 @@ Rails.application.routes.draw do
       get 'edit_basic_info'
       patch 'update_basic_info'
     end
-    resources :attendances, only: :update # この行を追加します。
-  end
-end
+    resources :attendances, only: :update do
+     member do  
+       get 'lunch_check'
+       patch 'update_lunch_check'
+     end #member do end
+    end #resouces do end
+  end #user resouces do end 
+end #draw do end
