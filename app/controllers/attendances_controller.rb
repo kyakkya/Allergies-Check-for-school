@@ -21,3 +21,20 @@ class AttendancesController < ApplicationController
     redirect_to @user
   end
 end
+
+ def lunch_check #アレルギーチェック
+    @user = User.find(params[:user_id])
+    @attendance = Attendance.find(params[:id])
+    @superiors =  User.where(superior: true).where.not(id: @user.id)
+ end
+ 
+  def update_lunch＿check #アレルギーチェックのアップデート
+    @user = User.find(params[:user_id])
+    @attendance = Attendance.find(params[:id])
+    
+     # 更新失敗時の処理.
+     
+     
+    redirect_to user_url(@user)
+  end  
+  
