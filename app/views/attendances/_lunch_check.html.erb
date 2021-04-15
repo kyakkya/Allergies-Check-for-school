@@ -11,6 +11,40 @@
       <h1 class="modal-title">【アレルギーチェック】</h1>
     </div>  
     
-    
-  </div> 
+    <div class="modal-body">
+     <!--<　%= form_with(model: @attendance, url: update_lunch_check_user_attendance_path(@user, @attendance), local: true, method: :patch) do |f| %>    -->
+    </div>
+      <table  border=2 width=100%, class="table table-bordered table-condensed user-table">
+        <thead>
+          <%
+             css_class = 
+             case %w{日 月 火 水 木 金 土}[@attendance.worked_on.wday]
+             when '土'
+               'text-primary'
+             when '日'
+               'text-danger'
+             end
+          %> 
+          <tr>
+            <th>日付</th>
+            <th>曜日</th>
+            <th>チェック１</th>
+            <tr>チェック2</tr>
+            <tr>本人</tr>
+            <tr>報告</tr>
+          </tr>  
+        </thead> 
+        
+        <tbody>
+          <tr>
+            <td><%= l(@attendance.worked_on, format: :short) %></td>
+            <td class="<%= css_class %>"><%= %w{日 月 火 水 木 金 土}[@attendance.worked_on.wday] %></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table> 
+      
+  　</div> 
 </div>    
