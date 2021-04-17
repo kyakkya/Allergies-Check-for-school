@@ -13,7 +13,7 @@ Rails.application.routes.draw do
       patch 'update_basic_info'
     end
     
-  resources :attendances, only: [:edit, :update] do
+    resources :attendances, only: [:edit, :update] do
      member do  
        get 'lunch_check'
        patch 'update_lunch_check'
