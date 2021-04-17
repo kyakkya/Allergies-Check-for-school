@@ -1,5 +1,5 @@
-<% provide(:class_text, 'lunch-check') %>
-<% provide(:button_text, 'アレルギーチェック') %>
+<% provide(:class_text, 'lunch_check') %>
+<% provide(:button_text, '給食チェック') %>
 
 
 <div class="modal-dialog modal-lg modal-dialog-center">
@@ -9,42 +9,56 @@
         <span aria-hidden="true">&times;</span>
       </button>
       <h1 class="modal-title">【アレルギーチェック】</h1>
-    </div>  
+    </div>
     
     <div class="modal-body">
-     <!--<　%= form_with(model: @attendance, url: update_lunch_check_user_attendance_path(@user, @attendance), local: true, method: :patch) do |f| %>    -->
-    </div>
-      <table  border=2 width=100%, class="table table-bordered table-condensed user-table">
-        <thead>
-          <%
-             css_class = 
-             case %w{日 月 火 水 木 金 土}[@attendance.worked_on.wday]
-             when '土'
-               'text-primary'
-             when '日'
-               'text-danger'
-             end
-          %> 
-          <tr>
-            <th>日付</th>
-            <th>曜日</th>
-            <th>チェック１</th>
-            <tr>チェック2</tr>
-            <tr>本人</tr>
-            <tr>報告</tr>
-          </tr>  
-        </thead> 
+    <%= form_with(model: @attendance, '#', local: true, method: :patch) do |f| %>  
+                                           
+     <table  border=2 width=100%, class="table table-bordered table-condensed user-table">
+       <thead>
+        <tr>
+          <th>日付</th>
+          <th>曜日</th>
+          <th>第１チェック</th>
+          <th>第2チェック</th>
+          <th>本人</th>
+          <th>アレルギー担当確認</th>
+        </tr>
+       </thead>
+       
+　     <tbody>
+              <% 
+                css_class = 
+                case %w{日 月 火 水 木 金 土}[@attendance.worked_on.wday]
+                when '土'
+                  'text-primary'
+                when '日'
+                  'text-danger'
+                end
+              %> 
+          
+           　 <tr> 
+                <td><%= l(@attendance.worked_on, format: :short) %></td>
+                <td class="<%= css_class %>"><%= %w{日 月 火 水 木 金 土}[@attendance.worked_on.wday] %></td>
+                <td><%= f.check_box :first_teacher, class: "form-control" %></td>
+                <td><%= f.check_box :second_teacher, class: "form-control" %></td>
+                 <td><%= f.check_box :student, class: "form-control" %></td>
+                <td><%= f.text_field :note, class: "form-control" %></td>
+                <td><%= f.collection_select :superior,  @superiors, :name, :name, :include_blank => true %></td>
+             </tr>  
+       </tbody>    
         
-        <tbody>
-          <tr>
-            <td><%= l(@attendance.worked_on, format: :short) %></td>
-            <td class="<%= css_class %>"><%= %w{日 月 火 水 木 金 土}[@attendance.worked_on.wday] %></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-        </tbody>
       </table> 
+      <%= f.submit "残業を申請する", class: "btn btn-primary btn-lg btn-block" %></div> 
+      <% end %>
+  　 </div> 
+ 　 </div> 
+ </div>  
+    
       
-  　</div> 
-</div>    
+     
+        
+            
+            
+                  
+            
