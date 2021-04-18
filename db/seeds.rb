@@ -24,4 +24,10 @@ User.create!(name: "山田",
              password_confirmation: "password",
              superior: true)              
 
+User.create!(name: "教頭",
+             email: "kyoutou@email.com",
+             password: "password",
+             password_confirmation: "password",
+             superior: true)              
+
 

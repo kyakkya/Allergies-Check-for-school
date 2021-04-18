@@ -11,6 +11,7 @@ class UsersController < ApplicationController
 
   def show
     @worked_sum = @attendances.where.not(started_at: nil).count
+    @lunch_check_sum = Attendance.where(lunch_check_superior: @user.name).where(status: "報告中").count
   end
 
   def new
@@ -61,11 +62,11 @@ class UsersController < ApplicationController
   private
 
     def user_params
-      params.require(:user).permit(:name, :email, :department, :password, :password_confirmation)
+      params.require(:user).permit(:name, :email, :classroom, :password, :password_confirmation)
     end
 
     def basic_info_params
-      params.require(:user).permit(:department, :basic_time, :work_time)
+      params.require(:user).permit(:classroom, :basic_time, :work_time)
     end
 
     # beforeフィルター
