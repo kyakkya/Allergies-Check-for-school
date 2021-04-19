@@ -17,7 +17,11 @@ Rails.application.routes.draw do
      member do  
        get 'lunch_check'
        patch 'update_lunch_check'
-     end #member do end
+     end   
+     collection do
+        get 'lunch_check_info'
+        patch 'update_lunch_check_info'   
+     end #collection do end
     end #resouces do end
   end #user resouces do end 
 end

@@ -45,10 +45,37 @@ class AttendancesController < ApplicationController
   end 
     redirect_to user_url(@user)   
  end
-
+ 
+ def lunch_check_info 
+   @user = User.find(params[:user_id])
+   @requesters = Attendance.where(lunch_check_superior: @user.name, status: "報告中").order(:user_id).group_by(&:user_id)
+ end 
+ 
+ def update_lunch_check_info
+   @user = User.find(params[:user_id])
+   ActiveRecord::Base.transaction do 
+    lunch_check_info_params.each do |id, item|
+      if item[:superior_checker] == "1"
+        attendance = Attendance.find(id)
+        attendance.update_attributes!(item)
+         @info_sum = Attendance.where(status: "承認").count
+         @unapproval_info_sum = Attendance.where(status: "要再確認").count
+         flash[:success] = "なし#{@no_reply_info}件、承認#{@info_sum}件、否認#{@unapproval_info_sum}件"
+      end #if end 
+    end #each end 
+    redirect_to user_url(@user)
+  end #Acctive do end    
+ #def end
+ rescue ActiveRecord::RecordInvalid # トランザクションによるエラーの分岐です。
+   flash[:danger] = "無効な入力データがあった為、更新をキャンセルしました。"
+ end #def end
+ 
  private
   def lunch_check_params
     params.require(:attendance).permit(:first_teacher, :second_teacher, :student, :lunch_check_superior, :status, :note)  
   end 
-
+  
+  def lunch_check_info_params 
+  end  
+  
 end  

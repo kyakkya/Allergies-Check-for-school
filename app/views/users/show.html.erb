@@ -19,7 +19,7 @@
     <div>
       <% if  @lunch_check_sum > 0 %>
         <p><font color="red">
-         <%= link_to "【アレルギーチェックのお知らせ】", '#', remote: true, style: "color:red;" %>
+         <%= link_to "【アレルギーチェックのお知らせ】", lunch_check_info_user_attendances_path(@user), remote: true, style: "color:red;" %>
         <span class="box"><%= @lunch_check_sum %> 件のお知らせがあります</span></font></p>
       <% else %>
         <p>【アレルギーチェックのお知らせ】</p>
@@ -99,3 +99,4 @@
   </table>
 </div>
 <div id="lunch-check" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="lunch-check-info" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
