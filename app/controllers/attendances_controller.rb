@@ -52,15 +52,16 @@ class AttendancesController < ApplicationController
  end 
  
  def update_lunch_check_info
+   
    @user = User.find(params[:user_id])
    ActiveRecord::Base.transaction do 
     lunch_check_info_params.each do |id, item|
       if item[:superior_checker] == "1"
         attendance = Attendance.find(id)
         attendance.update_attributes!(item)
-         @info_sum = Attendance.where(status: "承認").count
+         @info_sum = Attendance.where(status: "確認済").count
          @unapproval_info_sum = Attendance.where(status: "要再確認").count
-         flash[:success] = "なし#{@no_reply_info}件、承認#{@info_sum}件、否認#{@unapproval_info_sum}件"
+         flash[:success] = "確認済#{@info_sum}件、要再確認#{@unapproval_info_sum}件"
       end #if end 
     end #each end 
     redirect_to user_url(@user)
@@ -76,6 +77,8 @@ class AttendancesController < ApplicationController
   end 
   
   def lunch_check_info_params 
+    params.require(:user).permit(attendances: [:status, :superior_checker])[:attendances]
   end  
+  
   
 end  
