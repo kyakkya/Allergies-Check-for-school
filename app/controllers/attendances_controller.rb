@@ -32,7 +32,7 @@ class AttendancesController < ApplicationController
   #アレルギーチェックのアップデート
   @user = User.find(params[:user_id])
   @attendance = Attendance.find(params[:id])
-  if params[:attendance][:first_teacher] == false || params[:attendance][:second_teacher] == false || params[:attendance][:student] == false
+  if params[:attendance][:first_teacher] == "0" || params[:attendance][:second_teacher] == "0" || params[:attendance][:student] == "0"
      flash[:danger] = "#{@user.name}さん,チェックをすべてしてください。 "
   elsif params[:attendance][:lunch_check_superior].blank? 
         flash[:danger] = "アレルギー担当者を選択して下さい。 "

@@ -45,7 +45,7 @@
                       <td><%= day.note  %></td>
                       <td><%= at.check_box :superior_checker, class: "form-control" %></td>
                       <td><%= at.select :status, ['', '要再確認', '報告中', '確認済'], class: "form-control" %></td>
-                      <td><%= link_to "確認",'#', class: "btn btn-primary btn-lg btn-block" %></td>
+                      <td><%= link_to "確認",comfirmation_user_path(user_id, day: day.worked_on), class: "btn btn-primary btn-lg btn-block" %></td>
                     </tr> 
                  </tbody>    
               <% end %>
