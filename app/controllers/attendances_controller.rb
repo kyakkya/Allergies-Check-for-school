@@ -1,5 +1,5 @@
 class AttendancesController < ApplicationController
-  UPDATE_ERROR_MSG = "勤怠登録に失敗しました。やり直してください。"
+  UPDATE_ERROR_MSG = "登録に失敗しました。やり直してください。"
 
  def update
     @user = User.find(params[:user_id])

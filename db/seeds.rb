@@ -12,22 +12,11 @@ User.create!(name: "管理職",
              password_confirmation: "password",
              admin: true)
              
-User.create!(name: "高橋",
-             email: "shunin1@email.com",
-             password: "password",
-             password_confirmation: "password",
+User.create!(name: "代表",
+             email: "dai@n.n",
+             password: "are",
+             password_confirmation: "are",
              superior: true) 
              
-User.create!(name: "山田",
-             email: "shunin2@email.com",
-             password: "password",
-             password_confirmation: "password",
-             superior: true)              
-
-User.create!(name: "教頭",
-             email: "kyoutou@email.com",
-             password: "password",
-             password_confirmation: "password",
-             superior: true)              
 
 

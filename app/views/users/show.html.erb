@@ -17,7 +17,7 @@
 </div>
 　<% if @user.superior? %>
     <div>
-      <% if  @lunch_check_sum > 0 %>
+      <% if @lunch_check_sum > 0 %>
         <p><font color="red">
          <%= link_to "【アレルギーチェックのお知らせ】", lunch_check_info_user_attendances_path(@user), remote: true, style: "color:red;" %>
         <span class="box"><%= @lunch_check_sum %> 件のお知らせがあります</span></font></p>
@@ -73,9 +73,9 @@
             <% if day.status == "報告中" %>
         　     <div><%= day.lunch_check_superior %>に報告</div> 
             <% elsif day.status ==  "確認済" %> 
-              <div> アレルギー担当確認済 </div> 
+              <div> 代表者確認済 </div> 
             <% else %>
-              <%= day.status %>
+              <div></div>
             <% end %> 
           </td>
         </tr>
